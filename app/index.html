@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <meta name="description" content="">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <div class="container">
+        <article id="wikiArticle">
+            <p><span class="seoSummary">The CSS3 <strong>Flexible Box</strong>, or <strong>flexbox</strong>, is a <a href="/en-US/docs/CSS/Layout_mode" title="/en-US/docs/CSS/Layout_model">layout mode</a> providing for the arrangement of elements on a page such that the elements behave predictably when the page layout must accommodate different screen sizes and different display devices.</span> For many applications, the flexible box model provides an improvement over the block model in that it does not use floats, nor do the flex container's margins collapse with the margins of its contents.&nbsp;</p>
+            <p>Many designers will find the flexbox model easier to use. Child elements in a flexbox can be laid out in any direction and can have flexible dimensions to adapt to the display space. Positioning child elements is thus much easier, and complex layouts can be achieved more simply and with cleaner code, as the display order of the elements is independent of their order in the source code. This independence intentionally affects only the visual rendering, leaving speech order and navigation based on the source order.</p>
+            <div class="note"><strong>Note:</strong> Though <a class="external external-icon" href="http://www.w3.org/TR/css3-flexbox/">CSS Flexible Boxes Layout specification</a> is at the Last Call Working Draft stage (see also the <a class="external external-icon" href="http://dev.w3.org/csswg/css-flexbox/">Latest Editor draft</a>), not all browsers have implemented all features of Flexbox. <span style="line-height: 1.5;">That said, there is now a good support across the board of flexbox. See the compatibility table on each property for an up-to-date compatibility status.</span></div>
+            <h2 id="Flexible_boxes_concept">Flexible boxes concept</h2>
+            <p>The defining aspect of the flex layout is the ability to alter its items' width and/or height to best fill the available space on any display device. A flex container expands items to fill available free space, or shrinks them to prevent overflow.</p>
+            <p>The flexbox layout algorithm is direction-agnostic as opposed to the block layout, which is vertically-biased, or the inline layout, which is horizontally-biased. While the block layout works well for pages, it lacks sufficient definition to support application components that have to change orientation, resize, stretch, or shrink as the user agent changes, flips from vertical to horizontal, and so forth. Flexbox layout is most appropriate for the components of an application, and small-scale layouts, while the (emerging) Grid layout is intended for larger scale layouts. Both are part of a wider effort of the CSS Working Group to provide for greater interoperability of web applications with different user agents, different writing modes, and other demands on flexibility.</p>
+            <h2 id="Flexible_boxes_vocabulary">Flexible boxes vocabulary</h2>
+            <p>While a discussion of flexible boxes is liberated from terms like&nbsp;horizontal/inline axis and vertical/block axis, it requires a new terminology to properly describe the model. Consider the following diagram when reviewing the vocabulary items below. It shows a flex container that has a <code>flex-direction</code> of <code>row</code>, meaning that the flex items follow each other horizontally across the main axis according to the established writing mode, the direction in which the element's text flows, in this case left-to-right.</p>
+            <p><img alt="Flex Terms" class="internal default" src="/img/flex-terms.png"></p>
+            <dl>
+                <dt>Flex container</dt>
+                <dd>The parent element in which flex items are contained. A flex container is defined using the&nbsp;<code>flex</code>&nbsp;or&nbsp;<code>inline-flex</code>&nbsp;values of the&nbsp;<a href="/en/CSS/display" rel="internal" title="display"><code>display</code></a>&nbsp;property.</dd>
+                <dt>Flex item</dt>
+                <dd>
+                    <p>Each child of a flex container becomes a flex item. Text directly contained in a flex container is wrapped in an anonymous flex item.</p>
+                </dd>
+                <dt>Axes</dt>
+                <dd>
+                    <p>Every flexible box layout follows two axes. The <strong>main axis</strong> is the axis along which the flex items follow each other. The&nbsp;<strong>cross axis</strong> is the axis perpendicular to the <strong>main axis</strong>.</p>
+                    <ul>
+                        <li>The&nbsp;<code><a href="/en/CSS/flex-direction" rel="internal" title="flex-direction">flex-direction</a></code>&nbsp;property establishes the main axis.</li>
+                        <li>The&nbsp;<a href="/en/CSS/justify-content" rel="internal" title="en/CSS/justify-content"><code>justify-content</code></a>&nbsp;property defines how flex items are laid out along the&nbsp;main axis&nbsp;on the current line.</li>
+                        <li>The&nbsp;<a href="/en/CSS/align-items" title="en/CSS/align-items"><code>align-items</code></a>&nbsp;property&nbsp;defines the default for how flex items are laid out along the&nbsp;cross axis&nbsp;on the current line.</li>
+                        <li>The&nbsp;<a href="/en/CSS/align-self" title="en/CSS/align-self"><code>align-self</code></a>&nbsp;property defines how a single flex item is aligned on the&nbsp;cross axis, and overrides the default established by&nbsp;<code>align-items.</code></li>
+                    </ul>
+                </dd>
+                <dt>Directions</dt>
+                <dd>
+                    <p>The <strong>main start</strong>/<strong>main end </strong>and&nbsp;<strong>cross start</strong>/<strong>cross end</strong> sides of the flex container describe the origin and terminus of the flow of flex items. They follow the&nbsp;main axis&nbsp;and&nbsp;cross axis&nbsp;of the flex container in the vector established by the <code>writing-mode</code> (left-to-right, right-to-left, etc.).</p>
+                    <ul>
+                        <li>The&nbsp;<a href="/en/CSS/order" rel="internal" title="en/CSS/order"><code>order</code></a>&nbsp;property assigns elements to ordinal groups and determines which elements appear first.</li>
+                        <li>The&nbsp;<a href="/en/CSS/flex-flow" rel="internal" title="flex-flow"><code>flex-flow</code></a>&nbsp;property shorthands the&nbsp;<a href="/en/CSS/flex-direction" rel="internal" title="flex-direction"><code>flex-direction</code></a>&nbsp;and&nbsp;<a href="/en/CSS/flex-wrap" rel="internal" title="flex-wrap"><code>flex-wrap</code></a>&nbsp;properties to lay out the flex items.</li>
+                    </ul>
+                </dd>
+                <dt>Lines</dt>
+                <dd>
+                    <p>Flex items can be laid out on either a single line or on several lines according to the&nbsp;<a href="/en/CSS/flex-wrap" rel="internal" title="flex-wrap"><code>flex-wrap</code></a>&nbsp;property, which controls the direction of the cross axis and the direction in which new lines are stacked.</p>
+                </dd>
+                <dt>Dimensions</dt>
+                <dd>
+                    <p>The flex items' agnostic equivalents of height and width are&nbsp;<strong>main size</strong>&nbsp;and&nbsp;<strong>cross size,</strong>&nbsp;which respectively follow the&nbsp;main axis&nbsp;and&nbsp;cross axis&nbsp;of the flex container.</p>
+                    <ul>
+                        <li>The&nbsp;<code style="font-size: 14px;"><a href="/en/CSS/min-height" title="/en/CSS/min-height">min-height</a></code>&nbsp;and&nbsp;<code style="font-size: 14px;"><a href="/en/CSS/min-width" title="/en/CSS/min-width">min-width</a></code>&nbsp;properties&nbsp;initial&nbsp;value is 0.</li>
+                        <li>The&nbsp;<a href="/en/CSS/flex" rel="internal" title="en/CSS/flex"><code>flex</code></a>&nbsp;property shorthands the&nbsp;<a href="/en/CSS/flex-grow" rel="internal" title="en/CSS/flex-grow"><code>flex-grow</code></a>,&nbsp;<a href="/en/CSS/flex-shrink" rel="internal" title="en/CSS/flex-shrink"><code>flex-shrink</code></a>, and&nbsp;<a href="/en/CSS/flex-basis" rel="internal" title="en/CSS/flex-basis"><code>flex-basis</code></a>&nbsp;properties to establish the flexibility of the flex items.</li>
+                    </ul>
+                </dd>
+            </dl>
+            <h2 id="Designating_a_flexible_box">Designating a flexible box</h2>
+            <p>To designate the CSS for elements using this style, set&nbsp;the&nbsp;<a href="/en/CSS/display" title="/en/CSS/display">display</a>&nbsp;property as follows:</p>
+            <pre class="brush: css  language-css" data-number=""><code class=" language-css"><span class="token property">display</span> <span class="token punctuation">:</span> flex<div class="line-number" data-start="1" style="top: 0px;"></div></code></pre>
+            <p>or</p>
+            <pre class="brush: css  language-css" data-number=""><code class=" language-css"><span class="token property">display</span> <span class="token punctuation">:</span> inline-flex<div class="line-number" data-start="1" style="top: 0px;"></div></code></pre>
+            <p>Doing so defines the element as a flex container and its children as flex items.&nbsp;The&nbsp;<code>flex</code>&nbsp;value makes the flex container a block-level element. The&nbsp;<code>inline-flex</code>&nbsp;value makes the flex container an atomic inline-level element.</p>
+            <div class="note"><strong>Note:</strong> For the vendor prefix tag, append the string on the display property, not on the display attribute itself. For example,&nbsp;<code>display : -webkit-flex</code>.</div>
+            <h2 id="Flex_item_considerations">Flex item considerations</h2>
+            <p>Text that is directly contained inside a flex container is automatically wrapped in an anonymous flex item. However, an anonymous flex item that contains only white space is not rendered, as if it were designated&nbsp;<code style="color: rgb(93,86,54); font-size: 14px;">display:none</code>.</p>
+            <p>Absolutely positioned children of a flex container are positioned so that their static position is determined in reference to the main start content-box corner of their flex container.</p>
+            <p>Currently, due to a known issue, specifying&nbsp;<code style="font-size: 14px;">visibility:collapse</code>&nbsp;on a flex item causes it to be treated as if it were&nbsp;<code style="font-size: 14px;">display:none</code>&nbsp;instead of the intended behavior, treating it as if it were&nbsp;<code style="font-size: 14px;">visibility:hidden</code>. The suggested workaround until this issue is resolved is to use <code>visibility:hidden</code> for flex items that should behave as if they were designated&nbsp;<code>visibility:collapse</code>. For more information, see <a class="external external-icon" href="https://bugzilla.mozilla.org/show_bug.cgi?id=783470" title="FIXED: implement &quot;visibility: collapse&quot; behavior on flexbox">bug&nbsp;783470</a>.</p>
+            <p>The margins of adjacent flex items do not collapse. Using <code>auto</code> margins absorbs extra space in the vertical or horizontal direction and can be used for alignment or to separate adjacent flex items. See <a class="external external-icon" href="http://dev.w3.org/csswg/css3-flexbox/#auto-margins" title="http://dev.w3.org/csswg/css3-flexbox/#auto-margins">Aligning with 'auto' margins</a>&nbsp;in the W3C Flexible Box Layout Model specification for more details.</p>
+            <p>Flexbox's alignment properties do "true" centering, unlike other centering methods in CSS. This means that the flex items will stay centered, even if they overflow the flex container. This can sometimes be problematic, however, if they overflow past the top edge of the page, or the left edge (in LTR languages like English; the problem occurs on the right edge in RTL languages like Arabic), as you can't scroll to that area, even if there is content there! In a future release, the alignment properties will be extended to have a "safe" option as well. For now, if this is a concern, you can instead use margins to achieve centering, as they'll respond in a "safe" way and stop centering if they overflow. Instead of using the <code>align-</code> properties, just put auto margins on the flex items you wish to center. Instead of the <code>justify-</code> properties, put auto margins on the outside edges of the first and last flex items in the flex container. The auto margins will "flex" and assume the leftover space, centering the flex items when there is leftover space, and switching to normal alignment when not. However, if you're trying to replace <code>justify-content</code> with margin-based centering in a multi-line flexbox, you're probably out of luck, as you need to put the margins on the first and last flex item on each line. Unless you can predict ahead of time which items will end up on which line, you can't reliably use margin-based centering in the main axis to replace the <code>justify-content</code> property.</p>
+            <p>Recall that while the display order of the elements is independent of their order in the source code, this independence affects only the visual rendering, leaving speech order and navigation based on the source order. Even the <a href="/en-US/docs/Web/CSS/order" title="The CSS order property specifies the order used to lay out flex items in their flex container. Elements are laid out by ascending order of the order value. Elements with the same order value are laid out in the order they appear in the source code."><code>order</code></a> property does not affect speech or navigation sequence. Thus developers must take care to order elements properly in the source so as not to&nbsp;damage the document's accessibility.&nbsp;</p>
+            <h2 id="Flexible_box_properties">Flexible box properties</h2>
+            <p>Flexible-boxes-related properties: <a href="/en-US/docs/Web/CSS/margin" title="Technical review completed."><code>margin</code></a>,
+                <a href="/en-US/docs/Web/CSS/align-content" title="The CSS align-content property aligns a flex container's lines within the flex container when there is extra space on the cross-axis. This property has no effect on single line flexible boxes."><code>align-content</code></a>,
+                <a href="/en-US/docs/Web/CSS/align-items" title="The CSS align-items property aligns flex items of the current flex line the same way as justify-content but in the perpendicular direction."><code>align-items</code></a>,
+                <a href="/en-US/docs/Web/CSS/align-self" title="The align-self CSS property aligns flex items of the current flex line overriding the align-items value. If any of the flex item's cross-axis margin is set to auto, then align-self is ignored."><code>align-self</code></a>,
+                <a href="/en-US/docs/Web/CSS/display" title="The display CSS property specifies the type of rendering box used for an element. In HTML, default display property values are taken from behaviors described in the HTML specifications or from the browser/user default stylesheet. The default value in XML is inline."><code>display</code></a>,
+                <a href="/en-US/docs/Web/CSS/flex" title="The flex CSS property is a shorthand property specifying the ability of a flex item to alter its dimensions to fill available space. Flex items can be stretched to use available space proportional to their flex grow factor or their flex shrink factor to prevent overflow."><code>flex</code></a>,
+                <a href="/en-US/docs/Web/CSS/flex-basis" title="The CSS flex-basis property specifies the flex basis which is the initial main size of a flex item. The property determines the size of the content-box unless specified otherwise using box-sizing."><code>flex-basis</code></a>,
+                <a href="/en-US/docs/Web/CSS/flex-direction" title="The CSS flex-direction property specifies how flex items are placed in the flex container defining the main axis and the direction (normal or reversed)."><code>flex-direction</code></a>,
+                <a href="/en-US/docs/Web/CSS/flex-flow" title="The CSS flex-flow property is a shorthand property for flex-direction and flex-wrap individual properties."><code>flex-flow</code></a>,
+                <a href="/en-US/docs/Web/CSS/flex-grow" title="The CSS flex-grow property specifies the flex grow factor of a flex item."><code>flex-grow</code></a>,
+                <a href="/en-US/docs/Web/CSS/flex-shrink" title="The CSS flex-shrink property specifies the flex shrink factor of a flex item."><code>flex-shrink</code></a>,
+                <a href="/en-US/docs/Web/CSS/flex-wrap" title="The CSS flex-wrap property specifies whether the children are forced into a single line or if the items can be flowed on multiple lines."><code>flex-wrap</code></a>,
+                <a href="/en-US/docs/Web/CSS/justify-content" title="The CSS justify-content property defines how a browser distributes available space between and around elements when aligning flex items in the main-axis of the current line. The alignment is done after the lengths and auto margins are applied, meaning that, if there is at least one flexible element, with flex-grow different than 0, it will have no effect as there won't be any available space."><code>justify-content</code></a>,
+                <a href="/en-US/docs/Web/CSS/min-height" title="The min-height CSS property is used to set the minimum height of a given element. It prevents the used value of the height property from becoming smaller than the value specified for min-height."><code>min-height</code></a>,
+                <a href="/en-US/docs/Web/CSS/min-width" title="The min-width CSS property is used to set the minimum width of a given element. It prevents the used value of the width property from becoming smaller than the value specified for min-width."><code>min-width</code></a>,
+                <a href="/en-US/docs/Web/CSS/order" title="The CSS order property specifies the order used to lay out flex items in their flex container. Elements are laid out by ascending order of the order value. Elements with the same order value are laid out in the order they appear in the source code."><code>order</code></a></p>
+            <h3 id="Properties_not_affecting_flexible_boxes">Properties not affecting flexible boxes</h3>
+            <p>Because flexible boxes use a different layout algorithm, some properties do not make sense on a flex container:</p>
+            <ul>
+                <li><code>column-*</code> properties of the <a href="/en/CSS/Using_CSS_multi-column_layouts" title="Using CSS multi-column layouts">multiple column module</a>&nbsp;have no effect on a flex item.</li>
+                <li><a href="/en-US/docs/Web/CSS/float" title="The float CSS property specifies that an element should be taken from the normal flow and placed along the left or right side of its container, where text and inline elements will wrap around it. A floating element is one where the computed value of float is not none."><code>float</code></a> and <a href="/en-US/docs/Web/CSS/clear" title="The clear CSS property specifies whether an element can be next to floating elements that precede it or must be moved down (cleared) below them."><code>clear</code></a> have no effect on a flex item. Using&nbsp;<code>float</code>&nbsp;causes the&nbsp;<code>display</code>&nbsp;property of the element to compute to&nbsp;<code>block</code>.</li>
+                <li><a href="/en-US/docs/Web/CSS/vertical-align" title="The vertical-align CSS property specifies the vertical alignment of an inline or table-cell box."><code>vertical-align</code></a> has no effect on the alignment of flex items.</li>
+            </ul>
+            <h2 id="Examples">Examples</h2>
+            <h3 id="Basic_flex_example">Basic flex example</h3>
+            <p>This basic example shows how to apply "flexibility" to an element and how sibling elements behave in a flexible state.</p>
+            <h3 id="Holy_Grail_Layout_example">Holy Grail Layout example</h3>
+            <p>This example demonstrates how flexbox provides the ability to dynamically change the layout for different screen resolutions. The following diagram illustrates the transformation.</p>
+            <p><img alt="Holy Grail Layout" class="internal default" src="/img/holy-grail-layout.png"></p>
+            <p>Illustrated here is the case where the page layout suited to a browser window must be optimized for a smart phone window. Not only must the elements reduce in size, but the order in which they are presented must change. Flexbox makes this very simple.</p>
+        </article>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

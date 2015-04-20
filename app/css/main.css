@@ -1,0 +1,25 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+    background: rgb(237, 237, 237);
+}
+
+.container {
+    background: white;
+    margin: 2em auto;
+    max-width: 1200px;
+    padding: 1em;
+}
+
+img {
+    height: auto;
+    width: 100%;
+}
